@@ -1,18 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love Calculator</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg center">
 
-<div class="card" id="card">
-  <div id="form">
-    <h2>💖 Love Calculator</h2>
-    <input id="fname" placeholder="Your Name">
-    <input id="cname" placeholder="Crush Name">
-    <button class="btn" onclick="submit()">Calculate ❤️</button>
+<body class="bg">
+
+<div class="container center">
+  <div class="card glass" id="card">
+
+    <!-- FORM -->
+    <div id="form">
+      <h2>💖 Love Calculator</h2>
+      <input id="fname" placeholder="Your Name">
+      <input id="cname" placeholder="Your Crush 💕">
+      <button class="btn" onclick="submit()">Calculate ❤️</button>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loader" class="hidden">
+      <p>Analyzing emotions 💓</p>
+      <div class="fake-bar"></div>
+    </div>
+
+    <!-- PRANK RESULT -->
+    <div id="prank" class="hidden prank-result">
+      <h2>You have been fooled by <span id="senderName">Yogesh</span></h2>
+
+      <p class="desc">
+        Your name as well as name of your love<br>
+        has been sent to <b id="senderName2">Yogesh</b>
+      </p>
+
+      <div class="emoji">😂</div>
+
+      <hr>
+
+      <p class="small">Register now to prank your friends 😈</p>
+
+      <button class="btn green" onclick="goRegister()">Register NOW</button>
+      <button class="btn outline" onclick="goDashboard()">My Dashboard</button>
+    </div>
+
   </div>
 </div>
 
@@ -34,6 +66,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const rid = new URLSearchParams(location.search).get("rid");
+
 if (!rid) {
   card.innerHTML = "<h3>Invalid link ❌</h3>";
   throw new Error("Invalid receiver id");
@@ -59,6 +92,26 @@ window.submit = async () => {
 
   const sender = snap.docs[0].data().senderName;
 
+    document.getElementById("form").classList.add("hidden");
+    document.getElementById("loader").classList.remove("hidden");
+
+    setTimeout(() => {
+      document.getElementById("loader").classList.add("hidden");
+      document.getElementById("prank").classList.remove("hidden");
+    }, 2500);
+  }
+
+  function goRegister() {
+    window.location.href = "create.html";
+  }
+
+  function goDashboard() {
+    window.location.href = "dashboard.html";
+  }
+</script>
+
+</body>
+</html>
   card.innerHTML = `
     <h3>You have been fooled by <b>${sender}</b> 😈</h3>
     <p>Your secret has been sent!</p>
