@@ -3,10 +3,16 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Link</title>
+<link rel="icon" href="love.jpg" type="image/png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg center">
-
+<!-- Loader -->
+<div id="loader1" class="loader1 hidden">
+  <div class="spinner"></div>
+  <p>Generating link...</p>
+</div>
+  
 <div class="card create-card">
   <h2>Create Prank Link 😈</h2>
   <input id="name" placeholder="Your Name">
@@ -59,6 +65,9 @@ window.register = async () => {
   const name = document.getElementById("name").value.trim();
   if (!name) return alert("Enter your name");
 
+  // 🔄 Show loader
+  document.getElementById("loader1").classList.remove("hidden");
+
   const receiverId = crypto.randomUUID();
   const dashboardId = crypto.randomUUID();
 
@@ -72,8 +81,11 @@ window.register = async () => {
   document.getElementById("links").style.display="block";
   shareLink.value = `${location.origin}/prank.html?rid=${receiverId}`;
   dashLink.value = `${location.origin}/dashboard.html?sid=${dashboardId}`;
-  
+
   DASHBOARD_LINK = dashLink.value;
+
+  // ✅ Hide loader
+  document.getElementById("loader1").classList.add("hidden");
 };
 </script>
 <script>
