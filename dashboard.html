@@ -32,10 +32,10 @@
       <tr>
         <th>Friend</th>
         <th>Crush</th>
-        <th>Time</th>
+        
       </tr>
       <tr>
-        <td colspan="3" class="empty">No entries yet 😅</td>
+        <td colspan="2" class="empty">No entries yet 😅</td>
       </tr>
     </table>
   </div>
@@ -83,7 +83,7 @@ const senderSnap = await getDocs(
 
 if (senderSnap.empty) {
   document.getElementById("table").innerHTML =
-    "<tr><td colspan='3'>Invalid dashboard ❌</td></tr>";
+    "<tr><td colspan='2'>Invalid dashboard ❌</td></tr>";
   throw new Error("Invalid SID");
 }
 
@@ -109,7 +109,7 @@ entriesSnap.forEach(d=>{
   tr.innerHTML = `
     <td>${d.data().friend}</td>
     <td>${d.data().crush}</td>
-    <td>${new Date(d.data().time).toLocaleString()}</td>
+    
   `;
   document.getElementById("table").appendChild(tr);
 });
