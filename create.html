@@ -7,18 +7,35 @@
 </head>
 <body class="bg center">
 
-<div class="card">
+<div class="card create-card">
   <h2>Create Prank Link 😈</h2>
   <input id="name" placeholder="Your Name">
   <button class="btn" onclick="register()">Generate Links</button>
 
   <div id="links" style="display:none">
-    <p>Share with friends 👇</p>
-    <input id="shareLink" readonly>
 
-    <p><b>Secret Dashboard</b> (Save this)</p>
-    <input id="dashLink" readonly>
+  <p>🔗 Share this link</p>
+  <div class="copy-row">
+    <input id="shareLink" readonly>
+    <button class="copy-btn" onclick="copyText('shareLink')">Copy</button>
   </div>
+
+  <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp</button>
+
+  <p style="margin-top:15px;"><b>Check your friend's crush on 🔐 Secret Dashboard Link </b></p>
+  <div class="copy-row">
+    <input id="dashLink" readonly>
+    <button class="copy-btn" onclick="copyText('dashLink')">Copy</button>
+    
+    <div id="toast" class="toast hidden">Copied ✅</div>
+  
+  </div>
+  <h3>Make sure to save Dashboard link</h3>
+  <button class="btn go-dash-btn" onclick="goDashboard()">
+  Go to Your Dashboard →
+</button>
+
+</div>
 </div>
 
 <script type="module">
@@ -55,7 +72,53 @@ window.register = async () => {
   document.getElementById("links").style.display="block";
   shareLink.value = `${location.origin}/prank.html?rid=${receiverId}`;
   dashLink.value = `${location.origin}/dashboard.html?sid=${dashboardId}`;
+  
+  DASHBOARD_LINK = dashLink.value;
 };
+</script>
+<script>
+function copyText(id) {
+  const el = document.getElementById(id);
+  el.select();
+  el.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(el.value);
+  alert("Copied ✅");
+}
+
+function shareWhatsApp() {
+  const link = document.getElementById("shareLink").value;
+  const msg = `Calculate your ❤️ *LOVE Percentage* ❤️ using this *REAL and TRUSTED LOVE CALCULATOR* 
+😍👨‍❤️‍👨👇👇👇👨‍❤️‍👨😍\n${link}`;
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+}
+</script>
+
+<script>
+let DASHBOARD_LINK = "";
+
+function copyText(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value);
+  showToast("Copied ✅");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.remove("hidden");
+  setTimeout(() => t.classList.add("hidden"), 2000);
+}
+
+function goDashboard() {
+  if (!DASHBOARD_LINK) {
+    alert("Generate link first");
+    return;
+  }
+  window.location.href = DASHBOARD_LINK;
+}
 </script>
 
 </body>
