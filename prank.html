@@ -10,6 +10,10 @@
 <body class="bg">
 
 <div class="container center">
+
+    <span class="heart">❤️</span>
+    <span class="heart">💖</span>
+    <span class="heart">💕</span>
   <div class="card glass" id="card">
 
     <!-- FORM -->
@@ -28,21 +32,21 @@
 
     <!-- PRANK RESULT -->
     <div id="prank" class="hidden prank-result">
-      <h2>You have been fooled by <span id="senderName">Yogesh</span></h2>
+      <h2>You have been fooled by <span id="senderName">Your friend</span></h2>
 
       <p class="desc">
         Your name as well as name of your love<br>
-        has been sent to <b id="senderName2">Yogesh</b>
+        has been sent to <b id="senderName2">Your friend</b>
       </p>
 
       <div class="emoji">😂</div>
 
       <hr>
 
-      <p class="small">Register now to prank your friends 😈</p>
+      <p class="small">Register now to same prank with your friends</p>
 
-      <button class="btn green" onclick="goRegister()">Register NOW</button>
-      <button class="btn outline" onclick="goDashboard()">My Dashboard</button>
+      <a href="create.html"><button class="btn green" onclick="goRegister()">Register NOW</button></a>
+      
     </div>
 
   </div>
@@ -91,6 +95,9 @@ window.submit = async () => {
   }
 
   const sender = snap.docs[0].data().senderName;
+  document.getElementById("senderName").innerText = sender;
+  document.getElementById("senderName2").innerText = sender;
+
 
     document.getElementById("form").classList.add("hidden");
     document.getElementById("loader").classList.remove("hidden");
@@ -100,14 +107,7 @@ window.submit = async () => {
       document.getElementById("prank").classList.remove("hidden");
     }, 2500);
   }
-
-  function goRegister() {
-    window.location.href = "create.html";
-  }
-
-  function goDashboard() {
-    window.location.href = "dashboard.html";
-  }
+  
 </script>
 
 </body>
