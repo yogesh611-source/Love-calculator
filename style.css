@@ -111,7 +111,8 @@ th, td {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* vertical center */
+  /* dashboard ko upar rakhe ke liye */
+/*  justify-content: center;  */ /* vertical center */
   align-items: center;       /* horizontal center */
   padding: 20px;
 }
