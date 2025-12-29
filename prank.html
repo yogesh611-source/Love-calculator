@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="love.jpg" type="image/png">
   <title>Love Calculator</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -79,6 +80,9 @@ if (!rid) {
 window.submit = async () => {
   if(!fname.value || !cname.value) return alert("Fill both names");
 
+  document.getElementById("form").classList.add("hidden");
+  document.getElementById("loader").classList.remove("hidden");
+  
   await addDoc(collection(db,"entries"),{
     receiverId: rid,
     friend: fname.value,
@@ -97,10 +101,6 @@ window.submit = async () => {
   const sender = snap.docs[0].data().senderName;
   document.getElementById("senderName").innerText = sender;
   document.getElementById("senderName2").innerText = sender;
-
-
-    document.getElementById("form").classList.add("hidden");
-    document.getElementById("loader").classList.remove("hidden");
 
     setTimeout(() => {
       document.getElementById("loader").classList.add("hidden");
