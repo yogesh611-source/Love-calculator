@@ -2,7 +2,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Love Calculator❤️">
+<meta property="og:description" content="Check your love score in percentage 💘">
+<meta property="og:image" content="https://heartscore.netlify.app/heart.png">
+<meta property="og:url" content="https://heartscore.netlify.app">
+<meta property="og:type" content="website">
 <title>Dashboard</title>
+<link rel="icon" type="image/png" href="heart.png">
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,8 +45,9 @@
       </tr>
     </table>
   </div>
-  
-
+<pre style="font-size:12px;opacity:.7; position:absolute; top:93%">
+<a href="about.html">About</a>  |  <a href="privacy.html">Privacy Policy</a>  |  <a href="contact.html">Contact</a>
+</pre>
 </div>
 
 <script type="module">
@@ -93,7 +100,7 @@ document.querySelector(".welcome").innerText =
 
 // Set share link
 document.getElementById("shareLink").value =
-  location.origin + "/prank.html?rid=" + data.receiverId;
+  location.origin + "/love.html?rid=" + data.receiverId;
 
 // Load entries
 const entriesSnap = await getDocs(
