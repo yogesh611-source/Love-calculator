@@ -2,8 +2,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Love Calculator❤️">
+<meta property="og:description" content="Check your love score in percentage 💘">
+<meta property="og:image" content="https://heartscore.netlify.app/heart.png">
+<meta property="og:url" content="https://heartscore.netlify.app">
+<meta property="og:type" content="website">
 <title>Create Link</title>
-<link rel="icon" href="love.jpg" type="image/png">
+<link rel="icon" href="heart.png" type="image/png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg center">
@@ -14,20 +19,21 @@
 </div>
   
 <div class="card create-card">
-  <h2>Create Prank Link 😈</h2>
+  <div id="form">
+  <h2>Create Prank Link</h2>
   <input id="name" placeholder="Your Name">
   <button class="btn" onclick="register()">Generate Links</button>
-
+  </div>
   <div id="links" style="display:none">
 
-  <p>🔗 Share this link</p>
+  <p><b>🔗 Share this link</b></p>
   <div class="copy-row">
     <input id="shareLink" readonly>
     <button class="copy-btn" onclick="copyText('shareLink')">Copy</button>
   </div>
 
   <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp</button>
-
+  <hr>
   <p style="margin-top:15px;"><b>Check your friend's crush on 🔐 Secret Dashboard Link </b></p>
   <div class="copy-row">
     <input id="dashLink" readonly>
@@ -44,6 +50,9 @@
 </div>
 </div>
 
+<pre style="font-size:12px;opacity:.7; position:absolute; top:93%">
+<a href="about.html">About</a>  |  <a href="privacy.html">Privacy Policy</a>  |  <a href="contact.html">Contact</a>
+</pre>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -79,12 +88,13 @@ window.register = async () => {
   });
 
   document.getElementById("links").style.display="block";
-  shareLink.value = `${location.origin}/prank.html?rid=${receiverId}`;
+  shareLink.value = `${location.origin}/love.html?rid=${receiverId}`;
   dashLink.value = `${location.origin}/dashboard.html?sid=${dashboardId}`;
 
   DASHBOARD_LINK = dashLink.value;
 
   // ✅ Hide loader
+  document.getElementById("form").classList.add("hidden");
   document.getElementById("loader1").classList.add("hidden");
 };
 </script>
