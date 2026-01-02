@@ -26,6 +26,7 @@
       <input id="shareLink" readonly>
       <button class="copy-btn" onclick="copyText('shareLink')">Copy</button>
     </div>
+    <div id="toast" class="toast hidden">Copied ✅</div>
 
     <button class="wa-btn" onclick="shareWhatsApp()">Share on WhatsApp status</button>
   </div>
@@ -45,9 +46,10 @@
       </tr>
     </table>
   </div>
-<pre style="font-size:12px;opacity:.7; position:absolute; top:93%">
-<a href="about.html">About</a>  |  <a href="privacy.html">Privacy Policy</a>  |  <a href="contact.html">Contact</a>
-</pre>
+  <hr>
+  <pre style="font-size:12px;opacity:.7; position:fixed; top:94%">
+  <a href="about.html">About</a>  |  <a href="privacy.html">Privacy Policy</a>  |  <a href="contact.html">Contact</a>
+  </pre>
 </div>
 
 <script type="module">
@@ -69,12 +71,6 @@ const db = getFirestore(app);
 
 const sid = new URLSearchParams(location.search).get("sid");
 
-function copyText(id) {
-  const el = document.getElementById(id);
-  el.select();
-  navigator.clipboard.writeText(el.value);
-  alert("Copied ✅");
-}
 
 window.shareWhatsApp = function () {
   const link = document.getElementById("shareLink").value;
@@ -121,6 +117,19 @@ entriesSnap.forEach(d=>{
   document.getElementById("table").appendChild(tr);
 });
 </script>
+<script>
+  function copyText(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value);
+  showToast("Copied ✅");
+  }
 
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+  t.classList.remove("hidden");
+  setTimeout(() => t.classList.add("hidden"), 2000);
+  }
+</script>
 </body>
 </html>
