@@ -83,8 +83,8 @@ window.register = async () => {
   await addDoc(collection(db,"senders"),{
     senderName: name,
     receiverId,
-    dashboardId,
-    createdAt: Date.now()
+    dashboardId
+    
   });
 
   document.getElementById("links").style.display="block";
@@ -92,6 +92,7 @@ window.register = async () => {
   dashLink.value = `${location.origin}/dashboard.html?sid=${dashboardId}`;
 
   DASHBOARD_LINK = dashLink.value;
+  window.location.href = DASHBOARD_LINK;
 
   // ✅ Hide loader
   document.getElementById("form").classList.add("hidden");
