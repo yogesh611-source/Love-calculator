@@ -46,6 +46,13 @@
       </tr>
     </table>
   </div>
+  <!--Dashboard link  -->
+<br>
+  <div class="card" style="overflow-wrap: break-word">
+    <h3>Take screenshot of your secret dashboard link</h3>
+      <p id="dashlink">Copy url of this page.</p>
+  </div>
+  
   <hr>
   <pre style="font-size:12px;opacity:.7; position:fixed; top:94%">
   <a href="about.html">About</a>  |  <a href="privacy.html">Privacy Policy</a>  |  <a href="contact.html">Contact</a>
@@ -97,6 +104,8 @@ document.querySelector(".welcome").innerText =
 // Set share link
 document.getElementById("shareLink").value =
   location.origin + "/love.html?rid=" + data.receiverId;
+//dashboard link 
+  document.getElementById("dashlink").innerHTML= location.origin + "/dashboard.html?sid=" + data.dashboardId ;
 
 // Load entries
 const entriesSnap = await getDocs(
