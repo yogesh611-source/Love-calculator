@@ -15,9 +15,14 @@ body.bg {
 
 .center {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+#name {
+    border:1px solid grey;
 }
 
 .card {
@@ -486,4 +491,5 @@ hr {
 
 .hidden {
   display: none;
-}  
+} 
+ 
