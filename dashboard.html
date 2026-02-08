@@ -119,7 +119,7 @@ const entriesSnap = await getDocs(
 
 if (!entriesSnap.empty) {
   document.querySelector(".empty")?.remove();
-}
+
 
 entriesSnap.forEach(d=>{
   const tr = document.createElement("tr");
@@ -129,9 +129,9 @@ entriesSnap.forEach(d=>{
     
   `;
   document.getElementById("table").appendChild(tr);
-document.getElementById("loader1").classList.add("hidden");
-
 });
+  }
+document.getElementById("loader1").classList.add("hidden");
 </script>
 <script>
   function copyText(id) {
