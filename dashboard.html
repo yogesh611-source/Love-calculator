@@ -87,7 +87,7 @@ const sid = new URLSearchParams(location.search).get("sid");
 window.shareWhatsApp = function () {
   const link = document.getElementById("shareLink").value;
   const msg = `Calculate your ❤️ *LOVE Percentage* ❤️ using this *REAL and TRUSTED LOVE CALCULATOR* 
-😍👨‍❤️‍👨👇👇👇👨‍❤️‍👨😍\n${link}`;
+\n${link}`;
   window.open("https://wa.me/?text=" + encodeURIComponent(msg));
 };
 
